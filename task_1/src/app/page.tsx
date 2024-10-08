@@ -49,19 +49,19 @@ export default function DataReport() {
       const maxDateGet = jsonData[4][4].split("-")[0].trim();
       setMinTimeDefault(
         minDateGet.split("/")[2] +
-          "-" +
-          minDateGet.split("/")[1] +
-          "-" +
-          minDateGet.split("/")[0] +
-          "T00:00:00"
+        "-" +
+        minDateGet.split("/")[1] +
+        "-" +
+        minDateGet.split("/")[0] +
+        "T00:00:00"
       );
       setMaxTimeDefault(
         maxDateGet.split("/")[2] +
-          "-" +
-          maxDateGet.split("/")[1] +
-          "-" +
-          maxDateGet.split("/")[0] +
-          "T23:59:59"
+        "-" +
+        maxDateGet.split("/")[1] +
+        "-" +
+        maxDateGet.split("/")[0] +
+        "T23:59:59"
       );
       setDataFile(jsonData);
       setIsLoadingUpload(false);
@@ -128,80 +128,82 @@ export default function DataReport() {
   };
 
   return (
-    <div className="mx-auto max-w-screen-xl h-screen flex items-center justify-center">
-      <div className="w-[500px] flex flex-col bg-orange-300 p-8 rounded-md space-y-6">
-        <h1 className="font-bold text-5xl text-white mx-auto">Data Report</h1>
-        <div>
-          <label className="font-bold">Chọn file upload</label>
-          {isLoadingUpload && (
-            <p>
-              {" "}
-              <p className="my-2 text-red text-sm bg-white font-bold p-4 border rounded-sm text-center mx-auto">
+    <div className="min-h-screen bg-gradient-to-r from-orange-400 to-pink-500 flex items-center justify-center p-4">
+      <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
+        <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Data Report</h1>
+
+        <div className="space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Chọn file upload</label>
+            <div className="flex items-center space-x-2">
+              <input
+                type="file"
+                onChange={handleFileUpload}
+                accept=".xlsx"
+                className="flex-1 p-2 border border-gray-300 rounded-md text-sm"
+              />
+              <button
+                onClick={handleReadFile}
+                className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300"
+              >
+                Upload
+              </button>
+            </div>
+            {isLoadingUpload && (
+              <p className="mt-2 text-sm text-red-600 bg-red-100 p-2 rounded">
                 Vui lòng chờ file upload...
               </p>
-            </p>
-          )}
-          <div className="flex justify-between">
+            )}
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Chọn giờ bắt đầu</label>
             <input
-              className="border border-white p-3"
-              type="file"
-              onChange={handleFileUpload}
-              accept=".xlsx"
-              placeholder="Chọn file xlsx"
+              type="datetime-local"
+              value={startTime}
+              onChange={(e) => setStartTime(e.target.value)}
+              min={minTimeDefault}
+              max={maxTimeDefault}
+              step={1}
+              className="w-full p-2 border border-gray-300 rounded-md"
             />
-            <button
-              className="bg-white text-black p-4 rounded-md font-bold"
-              onClick={handleReadFile}
-            >
-              Upload
-            </button>
           </div>
-        </div>
 
-        <div className="flex justify-between items-center">
-          <label className="font-bold">Chọn giờ bắt đầu</label>
-          <input
-            type="datetime-local"
-            value={startTime}
-            step={1}
-            min={minTimeDefault}
-            max={maxTimeDefault}
-            placeholder="Nhập vào giờ bắt đầu"
-            className="p-3"
-            onChange={(e) => setStartTime(e.target.value)}
-          />
-        </div>
-        <div className="flex justify-between items-center">
-          <label className="font-bold">Chọn giờ kết thúc</label>
-          <input
-            type="datetime-local"
-            value={endTime}
-            min={minTimeDefault}
-            max={maxTimeDefault}
-            step={1}
-            className="p-3"
-            placeholder="Nhập vào giờ kết thúc"
-            onChange={(e) => setEndTime(e.target.value)}
-          />
-        </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Chọn giờ kết thúc</label>
+            <input
+              type="datetime-local"
+              value={endTime}
+              onChange={(e) => setEndTime(e.target.value)}
+              min={minTimeDefault}
+              max={maxTimeDefault}
+              step={1}
+              className="w-full p-2 border border-gray-300 rounded-md"
+            />
+          </div>
 
-        <button className="bg-black text-white p-4" onClick={calculateTotal}>
-          Tính tổng
-        </button>
-        {isLoading ? (
-          <p className="text-red text-sm bg-white font-bold p-4 border rounded-sm text-center mx-auto">
-            Vui lòng chờ trong giây lát...
-          </p>
-        ) : (
-          <div className="bg-white rounded-md w-fit p-4 m-auto">
-            <p className="font-bold text-xl">
-              Tổng thành tiền:{" "}
-              <span className="text-red-600">
-                {totalAmount.toLocaleString()} VNĐ
-              </span>
+          <button
+            onClick={calculateTotal}
+            className="w-full bg-green-500 text-white py-3 rounded-md hover:bg-green-600 transition duration-300"
+          >
+            Tính tổng
+          </button>
+
+          {isLoading ? (
+            <p className="text-sm text-red-600 bg-red-100 p-2 rounded text-center">
+              Vui lòng chờ trong giây lát...
             </p>
-          </div>
-        )}
+          ) : totalAmount > 0 && (
+            <div className="bg-gray-100 rounded-md p-4 text-center">
+              <p className="font-bold text-xl">
+                Tổng thành tiền:{" "}
+                <span className="text-red-600">
+                  {totalAmount.toLocaleString()} VNĐ
+                </span>
+              </p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
