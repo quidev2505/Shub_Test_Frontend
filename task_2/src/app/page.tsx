@@ -1,101 +1,142 @@
-import Image from "next/image";
+'use client';
+import React from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { useState } from 'react';
+import { AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
-export default function Home() {
+type FormData = {
+  time: string;
+  quantity: number;
+  pump: string;
+  revenue: number;
+  unitPrice: number;
+};
+
+const TransactionForm = () => {
+  const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null);
+  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+
+  const onSubmit = (data: FormData) => {
+    console.log(data);
+    setSubmitStatus('success');
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="mx-auto mt-4 p-2 bg-white rounded-lg shadow-sm max-w-[620px]">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex items-start mb-6 shadow-md p-4 border-transparent w-[650px] h-[112px] justify-between mx-auto -ml-5">
+          <div className='flex flex-col gap-y-2'>
+            <button className="mr-auto text-black-500 flex gap-x-2">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              <span className='text-sm'>Đóng</span>
+            </button>
+            <h2 className="text-3xl font-bold text-center flex-grow">Nhập giao dịch</h2>
+          </div>
+          <button
+            type="submit"
+            className="inline-block py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            Cập nhật
+          </button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+        <div className="my-4 border rounded-sm p-2">
+          <label htmlFor="time" className="block text-sm font-medium text-gray-700 opacity-50">Thời gian</label>
+          <input
+            type="datetime-local"
+            id="time"
+            {...register("time", { required: "Thời gian là bắt buộc" })}
+            className="block w-full rounded-md shadow-sm outline-none"
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
+
+        </div>
+        {errors.time && <p className="text-sm text-red-600 italic ">{errors.time.message}</p>}
+
+        <div className="my-4 border rounded-sm p-2">
+          <label htmlFor="quantity" className="block text-sm font-medium text-gray-700">Số lượng</label>
+          <input
+            type="number"
+            id="quantity"
+            step="0.01"
+            {...register("quantity", {
+              required: "Số lượng là bắt buộc",
+              min: { value: 0, message: "Số lượng phải lớn hơn 0" }
+            })}
+            className="mt-1 block w-full rounded-md outline-none"
           />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
+
+        </div>
+        {errors.quantity && <p className="text-sm text-red-600 italic">{errors.quantity.message}</p>}
+
+        <div className="my-4 border rounded-sm p-2">
+          <label htmlFor="pump" className="block text-sm font-medium text-gray-700">Trụ</label>
+          <select
+            id="pump"
+            {...register("pump", { required: "Trụ là bắt buộc" })}
+            className="mt-1 block w-full rounded-md outline-none"
+          >
+            <option value=""></option>
+            <option value="1">Trụ 1</option>
+            <option value="2">Trụ 2</option>
+            <option value="3">Trụ 3</option>
+          </select>
+
+        </div>
+        {errors.pump && <p className="text-sm text-red-600 italic">{errors.pump.message}</p>}
+
+        <div className="my-4 border rounded-sm p-2">
+          <label htmlFor="revenue" className="block text-sm font-medium text-gray-700">Doanh thu</label>
+          <input
+            type="number"
+            id="revenue"
+            {...register("revenue", {
+              required: "Doanh thu là bắt buộc",
+              min: { value: 0, message: "Doanh thu phải lớn hơn hoặc bằng 0" }
+            })}
+            className="mt-1 block w-full rounded-md outline-none"
           />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        </div>
+        {errors.revenue && <p className="text-sm text-red-600 italic">{errors.revenue.message}</p>}
+
+        <div className="my-4 border rounded-sm p-2">
+          <label htmlFor="unitPrice" className="block text-sm font-medium text-gray-700">Đơn giá</label>
+          <input
+            type="number"
+            id="unitPrice"
+            {...register("unitPrice", {
+              required: "Đơn giá là bắt buộc",
+              min: { value: 0, message: "Đơn giá phải lớn hơn 0" }
+            })}
+            className="mt-1 block w-full rounded-md outline-none"
+          />
+        </div>
+        {errors.unitPrice && <p className="text-sm text-red-600 italic">{errors.unitPrice.message}</p>}
+      </form>
+
+      {submitStatus === 'success' && (
+        <Alert className="mt-4 bg-green-300" variant="default">
+          <CheckCircle2 className="h-4 w-4" />
+          <AlertTitle className='font-bold'>Thành công</AlertTitle>
+          <AlertDescription>
+            Giao dịch đã được cập nhật thành công.
+          </AlertDescription>
+        </Alert>
+      )}
+
+      {submitStatus === 'error' && (
+        <Alert className="mt-4" variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle className='font-bold'>Lỗi</AlertTitle>
+          <AlertDescription>
+            Đã xảy ra lỗi khi cập nhật giao dịch. Vui lòng thử lại.
+          </AlertDescription>
+        </Alert>
+      )}
     </div>
   );
-}
+};
+
+export default TransactionForm;
