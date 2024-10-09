@@ -6,6 +6,11 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.MuiInputBase-root {
+  background-color: white !important;
+  border: 1px solid #ccc;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
