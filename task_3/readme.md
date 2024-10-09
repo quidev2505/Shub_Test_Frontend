@@ -1,4 +1,7 @@
-Thiết kế cấu trúc cơ sở dữ liệu:
+# Sơ đồ ERD thể hiện quan hệ giữa các bảng
+![image](https://github.com/user-attachments/assets/2346c5f8-5125-4c1f-9b6b-29e9a66e18a2)
+
+# Thiết kế cấu trúc cơ sở dữ liệu:
 a. Bảng Trạm xăng (GasStations):
 - id (khóa chính)
 - name
