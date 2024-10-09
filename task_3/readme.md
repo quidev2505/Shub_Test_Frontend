@@ -1,5 +1,6 @@
 # Sơ đồ ERD thể hiện quan hệ giữa các bảng
-![image](https://github.com/user-attachments/assets/2346c5f8-5125-4c1f-9b6b-29e9a66e18a2)
+![image](https://github.com/user-attachments/assets/b17bc25b-c48c-4383-a825-3a659a342171)
+
 
 # Thiết kế cấu trúc cơ sở dữ liệu:
 a. Bảng Trạm xăng (GasStations):
