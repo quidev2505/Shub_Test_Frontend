@@ -149,10 +149,10 @@ const TransactionForm = () => {
               required: "Số lượng là bắt buộc",
               min: { value: 0, message: "Số lượng phải lớn hơn 0" },
             })}
+            variant="filled"
             id="quantity"
             label="Số lượng"
             className="w-full rounded-sm mt-4"
-            variant="filled"
             type="number"
             inputProps={{ step: "0.01" }}
           />
