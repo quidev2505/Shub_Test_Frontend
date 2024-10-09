@@ -1,0 +1,15 @@
+{
+  "name": "task_4",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "task_4"
+  ],
+  "author": "qui_dev_2505",
+  "license": "ISC",
+  "description": ""
+}
