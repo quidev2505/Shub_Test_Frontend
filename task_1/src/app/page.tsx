@@ -87,9 +87,8 @@ export default function DataReport() {
     }
 
     try {
-      // Tìm vị trí của các cột cần thiết
+      // Tìm vị trí của các cột
       const headers: any[] = dataFile[7];
-      // console.log(headers);
       const dateIndex = headers.findIndex((h) => h === "Ngày");
       const timeIndex = headers.findIndex((h) => h === "Giờ");
       const amountIndex = headers.findIndex((h) => h === "Thành tiền (VNĐ)");
@@ -102,8 +101,6 @@ export default function DataReport() {
       const startDateTime = new Date(startTime);
       const endDateTime = new Date(endTime);
 
-      // 2024-03-21T21:08:15
-      // 21 / 03 / 2024;
       let total = 0;
       for (let i = 8; i < dataFile.length; i++) {
         const row = dataFile[i];
@@ -134,9 +131,10 @@ export default function DataReport() {
 
         <div className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Chọn file upload</label>
+            <label htmlFor="file_upload" className="block text-sm font-medium text-gray-700 mb-2">Chọn file upload</label>
             <div className="flex items-center space-x-2">
               <input
+                id="file_upload"
                 type="file"
                 onChange={handleFileUpload}
                 accept=".xlsx"
@@ -157,8 +155,9 @@ export default function DataReport() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Chọn giờ bắt đầu</label>
+            <label htmlFor="start_time" className="block text-sm font-medium text-gray-700 mb-2">Chọn giờ bắt đầu</label>
             <input
+              id="start_time"
               type="datetime-local"
               value={startTime}
               onChange={(e) => setStartTime(e.target.value)}
@@ -170,8 +169,9 @@ export default function DataReport() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Chọn giờ kết thúc</label>
+            <label htmlFor="end_time" className="block text-sm font-medium text-gray-700 mb-2">Chọn giờ kết thúc</label>
             <input
+              id="end_time"
               type="datetime-local"
               value={endTime}
               onChange={(e) => setEndTime(e.target.value)}
